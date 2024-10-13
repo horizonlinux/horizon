@@ -31,7 +31,7 @@ The following examples assume you have Docker correctly installed and set up, an
 
 ### 64-bit AMD/Intel
 
-Configure the channel in the `etc/terraform.conf` (stable, daily), then run:
+See what is the release name of release you want to build, then run:
 
 ```sh
 docker run --rm --privileged -it \
@@ -39,7 +39,18 @@ docker run --rm --privileged -it \
     -v ${PWD}:/working_dir \
     -w /working_dir \
     debian:latest \
-    ./build.sh etc/terraform.conf
+    ./build.sh etc/[release name].conf
+```
+
+for example to build Horizon 1.0 run this:
+
+```sh
+docker run --rm --privileged -it \
+    -v /proc:/proc \
+    -v ${PWD}:/working_dir \
+    -w /working_dir \
+    debian:latest \
+    ./build.sh etc/denali.conf
 ```
 
 ### Raspberry Pi 4
