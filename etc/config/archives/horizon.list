@@ -1,0 +1,3 @@
+deb [trusted=yes] https://ppa.launchpadcontent.net/horizonlinux/horizonrepo/ubuntu/ noble main
+deb [trusted=yes] https://download.opensuse.org/repositories/home:/horizon:/denali/xUbuntu_24.04/ ./
+

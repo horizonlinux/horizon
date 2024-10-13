@@ -6,6 +6,7 @@ iucode-tool
 open-vm-tools-desktop
 setserial
 user-setup
+base-files=13horizon10.1
 
 efibootmgr
 secureboot-db

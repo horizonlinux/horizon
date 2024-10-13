@@ -1,4 +1,6 @@
-#base system
+base-files=13horizon10.1
+lsb-release=12.0-2horizon0
+
 adduser
 apt
 apt-utils
@@ -15,7 +17,7 @@ kbd
 kmod
 less
 locales
-lsb-release
+
 mawk
 mount
 netbase
@@ -29,28 +31,30 @@ sudo
 tzdata
 ubuntu-keyring
 udev
-vim-tiny
 whiptail
 
-#desktop
+gdm3
 gnome-backgrounds
 gnome-browser-connector
+gnome-calculator
 gnome-calendar
-gnome-color-manager
+gnome-characters
 gnome-console
+gnome-control-center
+gnome-disk-utility
+gnome-font-viewer
+gnome-initial-setup
 gnome-session
 gnome-shell
 gnome-software
-gnome-software-common
-gnome-software-plugin-flatpak
-gnome-software-plugin-snap
-gnome-tweaks
-gnome-user-share
-gnome-video-effects wireplumber
-gdm3
+gnome-system-monitor
 gnome-text-editor
-gnome-control-center
-gnome-settings-daemon
+nautilus
+
+horizon-settings
+horizon-dock
+horizon-backgrounds
+fonts-inter
 
 @XORG_HWE
 @KERNEL_HEADERS
