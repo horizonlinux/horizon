@@ -1,2 +1,2 @@
 [org/gnome/shell]
-enabled-extensions=['horizon-dock@horizonlinux.gmail.com', 'trayIconsReloaded@selfmade.pl', 'gtk4-ding@smedius.gitlab.com']
+enabled-extensions=['horizon-dock@horizonlinux.gmail.com', 'blur-my-shell@aunetx']

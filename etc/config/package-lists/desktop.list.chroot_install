@@ -1,5 +1,4 @@
-base-files=13horizon10.1
-lsb-release=12.0-2horizon0
+base-files=13.4horizon0
 
 adduser
 apt
@@ -34,7 +33,6 @@ udev
 whiptail
 
 gdm3
-gnome-backgrounds
 gnome-browser-connector
 gnome-calculator
 gnome-calendar
@@ -43,18 +41,32 @@ gnome-console
 gnome-control-center
 gnome-disk-utility
 gnome-font-viewer
-gnome-initial-setup
+#gnome-initial-setup
 gnome-session
 gnome-shell
+gnome-shell-common
 gnome-software
+gnome-software-common
+gnome-software-plugin-deb
+gnome-software-plugin-flatpak
 gnome-system-monitor
 gnome-text-editor
 nautilus
+gnome-shell-extension-blur-my-shell
 
 horizon-settings
 horizon-dock
 horizon-backgrounds
-fonts-inter
+fonts-noto-mono
+fonts-noto-ui-core
+
+neofetch=7.1.0-4-horizon
+
+bubblewrap
+flatpak
+flatpak-flathub
+localsend
+distrobox
 
 @XORG_HWE
 @KERNEL_HEADERS

@@ -1,0 +1,12 @@
+Package: *ubiquity*
+Pin: origin packages.linuxmint.com
+Pin-Priority: 999
+
+Package: *ubiquity*
+Pin: origin http://packages.linuxmint.com
+Pin-Priority: 998
+
+Package: *ubiquity*
+Pin: release n=wilma
+Pin-Priority: 997
+

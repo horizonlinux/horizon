@@ -1,0 +1,7 @@
+Package: *
+Pin: release https://download.opensuse.org/repositories/home:/horizon:/denali/xUbuntu_24.04/
+Pin-Priority: 1000
+
+Package: *
+Pin: origin https://download.opensuse.org/repositories/home:/horizon:/denali/xUbuntu_24.04/
+Pin-Priority: 1000

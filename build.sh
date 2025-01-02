@@ -38,7 +38,7 @@ apt-key adv --recv-keys --keyserver keyserver.ubuntu.com F6ECB3762474EDA9D21B702
 patch -d /usr/lib/live/build/ < 314-follow-symlinks-when-measuring-size-of-efi-files.patch
 
 # TODO: Remove this once debootstrap can natively build noble images:
-ln -sfn /usr/share/debootstrap/scripts/gutsy /usr/share/debootstrap/scripts/noble
+ln -sfn /usr/share/debootstrap/scripts/gutsy /usr/share/debootstrap/scripts/oracular
 
 build () {
   BUILD_ARCH="$1"
@@ -57,6 +57,9 @@ build () {
     cp "config/appcenter/appcenter.list.binary" "config/archives/appcenter.list.binary"
     cp "config/appcenter/appcenter.key.binary" "config/archives/appcenter.key.binary"
   fi
+  
+  # Symlink chosen package lists to where live-build will find them
+#  ln -s "package-lists.$PACKAGE_LISTS_SUFFIX" "config/package-lists"
 
   echo -e "
 #------------------#
@@ -88,7 +91,7 @@ build () {
   YYYYMMDD="$(date +%Y%m%d)"
   OUTPUT_DIR="$BASE_DIR/builds/$BUILD_ARCH"
   mkdir -p "$OUTPUT_DIR"
-  FNAME="elementaryos-$VERSION-$CHANNEL.$YYYYMMDD$OUTPUT_SUFFIX"
+  FNAME="horizon-$VERSION-$CHANNEL.$YYYYMMDD$OUTPUT_SUFFIX"
   mv "$BASE_DIR/tmp/$BUILD_ARCH/live-image-$BUILD_ARCH.hybrid.iso" "$OUTPUT_DIR/${FNAME}.iso"
 
   # cd into output to so {FNAME}.sha256.txt only

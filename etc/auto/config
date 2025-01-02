@@ -16,7 +16,7 @@ fi
 
 lb config noauto \
     --architectures "$ARCH" \
-    --mode debian \
+    --mode ubuntu \
     --initramfs none \
     --distribution "$BASECODENAME" \
     --parent-distribution "$BASECODENAME" \
@@ -62,3 +62,4 @@ sed -i "s/@DATE/$DATE/" config/includes.binary/.disk/info
 
 sed -i "s/@XORG_HWE/$XORG_HWE/" config/package-lists/desktop.list.chroot_install
 sed -i "s/@KERNEL_HEADERS/linux-headers-$KERNEL_FLAVORS/" config/package-lists/desktop.list.chroot_install
+

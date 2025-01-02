@@ -1,12 +1,12 @@
 b43-fwcutter
 bcmwl-kernel-source
+broadcom-sta-dkms=6.30.223.271-23ubuntu1
 dkms
 intel-microcode
 iucode-tool
 open-vm-tools-desktop
 setserial
 user-setup
-base-files=13horizon10.1
 
 efibootmgr
 secureboot-db

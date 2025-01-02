@@ -1,0 +1,7 @@
+Package: gdm3 gnome-browser-connector gnome-calculator gnome-calendar gnome-characters gnome-terminal gnome-control-center gnome-disk-utility gnome-font-viewer gnome-session gnome-shell* gnome-software* gnome-system-monitor gnome-text-editor base-files lsb-release *
+Pin: origin https://download.opensuse.org/repositories/home:/horizon:/denali/xUbuntu_24.10/
+Pin-Priority: 1000
+
+Package: gdm3 gnome-browser-connector gnome-calculator gnome-calendar gnome-characters gnome-terminal gnome-control-center gnome-disk-utility gnome-font-viewer gnome-session gnome-shell gnome-software gnome-system-monitor gnome-text-editor base-files lsb-release
+Pin: origin http://http://archive.ubuntu.com/ubuntu/
+Pin-Priority: -32768
