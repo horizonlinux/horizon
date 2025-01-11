@@ -1,2 +1,0 @@
-deb [trusted=yes] http://packages.linuxmint.com wilma main upstream import backport romeo
-deb-src [trusted=yes] http://packages.linuxmint.com wilma main upstream import backport romeo
