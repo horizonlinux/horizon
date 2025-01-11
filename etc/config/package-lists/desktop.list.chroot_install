@@ -53,8 +53,9 @@ gnome-system-monitor
 gnome-text-editor
 nautilus
 gnome-shell-extension-blur-my-shell
+gnome-tweaks
 
-horizon-settings
+#horizon-settings
 horizon-dock
 horizon-backgrounds
 fonts-noto-mono

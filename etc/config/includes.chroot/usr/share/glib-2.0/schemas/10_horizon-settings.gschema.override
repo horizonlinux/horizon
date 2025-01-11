@@ -1,0 +1,39 @@
+###################
+# global settings #
+###################
+
+[org.gnome.desktop.background]
+picture-uri = 'file:///usr/share/backgrounds/horizon/denali.jpg'
+picture-uri-dark = 'file:///usr/share/backgrounds/horizon/denali.jpg'
+
+[org.gnome.desktop.screensaver]
+picture-uri = 'file:///usr/share/backgrounds/horizon/denali.jpg'
+
+[org.gnome.desktop.interface]
+cursor-theme='Adwaita'
+gtk-theme='adw-gtk3-wh'
+icon-theme='LookPositive'
+document-font-name='Noto Sans Regular 11'
+font-antialiasing='grayscale'
+font-hinting='slight'
+font-name='Noto Sans Regular 11'
+monospace-font-name='Noto Mono Regular 11'
+
+[org.gnome.desktop.wm.preferences]
+button-layout=':minimize,close'
+
+[org.gnome.shell]
+favorite-apps = [ 'ubiquity.desktop', 'firefox-esr.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop' ]
+
+[org.gnome.desktop.datetime]
+automatic-timezone = true
+
+[org.gnome.desktop.peripherals.touchpad]
+tap-to-click = true
+click-method = 'default'
+
+[org.gnome.software:GNOME]
+packaging-format-preference = ['flatpak']
+
+[org.gnome.desktop.app-folders.folders.Utilities]
+apps = []
