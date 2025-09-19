@@ -34,7 +34,7 @@ RUN pacman -r "${BOOTC_ROOTFS_MOUNTPOINT}" --cachedir=/var/cache/pacman/pkg -Syy
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
 
-RUN pacman -r "${BOOTC_ROOTFS_MOUNTPOINT}" --cachedir=/var/cache/pacman/pkg -Syyuu --noconfirm networkmanager gnome-initial-setup gnome-shell gnome-control-center gdm nautilus sushi gnome-backgrounds gnome-desktop gnome-menus gnome-session gnome-color-manager gnome-keyring gnome-user-share grilo-plugins gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd malcontent orca tecla xdg-desktop-portal-gnome xdg-user-dirs-gtk && \
+RUN pacman -r "${BOOTC_ROOTFS_MOUNTPOINT}" --cachedir=/var/cache/pacman/pkg -Syyuu --noconfirm networkmanager gnome-initial-setup gnome-shell gnome-control-center gdm nautilus sushi gnome-console gnome-backgrounds gnome-desktop gnome-menus gnome-session gnome-color-manager gnome-keyring gnome-user-share grilo-plugins gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd malcontent orca tecla xdg-desktop-portal-gnome xdg-user-dirs-gtk && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
 
