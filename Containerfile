@@ -34,6 +34,10 @@ RUN pacman -r "${BOOTC_ROOTFS_MOUNTPOINT}" --cachedir=/var/cache/pacman/pkg -Syy
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
 
+RUN pacman -r "${BOOTC_ROOTFS_MOUNTPOINT}" --cachedir=/var/cache/pacman/pkg -Syyuu --noconfirm networkmanager gnome-initial-setup gnome-shell gnome-control-center gdm nautilus sushi gnome-backgrounds gnome-desktop gnome-menus gnome-session gnome-color-manager gnome-keyring gnome-user-share grilo-plugins gvfs gvfs-afc gvfs-dnssd gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-onedrive gvfs-smb gvfs-wsdd malcontent orca tecla xdg-desktop-portal-gnome xdg-user-dirs-gtk && \
+  pacman -S --clean && \
+  rm -rf /var/cache/pacman/pkg/*
+
 RUN pacman -Syu --noconfirm base-devel git rust ostree dracut whois && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
@@ -79,6 +83,11 @@ RUN usermod --root "${BOOTC_ROOTFS_MOUNTPOINT}" -p "$(echo "changeme" | mkpasswd
 
 # Necessary for `bootc install`
 RUN echo -e '[composefs]\nenabled = yes\n[sysroot]\nreadonly = true' | tee "${BOOTC_ROOTFS_MOUNTPOINT}/usr/lib/ostree/prepare-root.conf"
+
+FROM scratch
+
+RUN systemctl enable gdm && \
+    systemctl enable NetworkManager
 
 FROM scratch AS runtime
 
