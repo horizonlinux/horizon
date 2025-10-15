@@ -4,7 +4,7 @@ FROM scratch AS ctx
 # Base Image
 FROM docker.io/archlinux/archlinux:latest
 
-ENV DEV_DEPS="base-devel git rust whois cmake extra-cmake-modules qt6-base qt6-tools kf6 libkscreen plasma-workspace kdeplasma-addons plasma-desktop plasma-keyboard pkgconf"
+ENV DEV_DEPS="base-devel git rust whois cmake extra-cmake-modules qt6-base qt6-tools kf6 libkscreen plasma-workspace kdeplasma-addons plasma-desktop pkgconf"
 
 ENV DRACUT_NO_XATTR=1
 RUN pacman -Syyuu --noconfirm \
