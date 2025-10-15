@@ -1,5 +1,6 @@
-<center align="center"> <img style="max-width: 45%;" src="https://raw.githubusercontent.com/horizonlinux/horizon/refs/heads/main/horizon%20color.png"> </center>
-======================================================================================================================================================
+<center align="center"> <img style="max-width: 256px;" src="https://raw.githubusercontent.com/horizonlinux/horizon/refs/heads/main/horizon%20color.png"> </center>
+
+# About
 
 Arch based distro with with Bootc composefs-native backend. It uses Plasma as the desktop enviroment.
 
