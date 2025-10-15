@@ -124,7 +124,7 @@ RUN mkdir -p /usr/lib/ostree && \
     printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
     tee "/usr/lib/ostree/prepare-root.conf"
 
-RUN systemd-sysusers
+RUN systemd-sysusers && \
     systemctl enable NetworkManager && \
     systemctl enable sddm && \
     systemctl enable kde-initial-system-setup.service
