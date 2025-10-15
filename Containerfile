@@ -127,6 +127,6 @@ RUN mkdir -p /usr/lib/ostree && \
 RUN systemd-sysusers && \
     systemctl enable NetworkManager && \
     systemctl enable sddm && \
-    systemctl enable kde-initial-system-setup.service
+    systemctl enable plasma-setup
 
 RUN bootc container lint
