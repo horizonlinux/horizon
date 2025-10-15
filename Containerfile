@@ -1,6 +1,6 @@
 FROM docker.io/archlinux/archlinux:latest AS builder
 
-ENV DEV_DEPS="base-devel git rust whois"
+ENV DEV_DEPS="base-devel git rust whois cmake"
 
 ENV DRACUT_NO_XATTR=1
 RUN pacman -Syyuu --noconfirm \
@@ -33,11 +33,71 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     git clone https://github.com/p5/coreos-bootupd.git -b sdboot-support /tmp/bootupd && \
     cd /tmp/bootupd && \
     cargo build --release --bins --features systemd-boot && \
-    make install
+    make install && \
+    git clone https://invent.kde.org/plasma/kiss.git /tmp/kiss && \
+    cd /tmp/kiss && \
+    cmake -B build/ && \
+    cmake --build build/ --parallel && \
+    cmake --install build/ && \
 
-# Setup a temporary root passwd (changeme) for dev purposes
-# TODO: Replace this for a more robust option when in prod
-RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
+RUN pacman -Syyuu --noconfirm \
+      aurorae \
+      bluedevil \
+      breeze \
+      breeze-gtk \
+      dolphin \
+      drkonqi \
+      kactivitymanagerd \
+      kde-cli-tools \
+      kde-gtk-config \
+      kdecoration \
+      kdeplasma-addons \
+      kglobalacceld \
+      kinfocenter \
+      kmenuedit \
+      konsole \
+      kpipewire \
+      krdp \
+      kscreen \
+      kscreenlocker \
+      ksshaskpass \
+      ksystemstats \
+      kwallet-pam \
+      kwayland \
+      kwin \
+      kwrited \
+      layer-shell-qt \
+      libkscreen \
+      libksysguard \
+      libplasma \
+      milou \
+      networkmanager \
+      ocean-sound-theme \
+      plasma-activities \
+      plasma-activities-stats \
+      plasma-browser-integration \
+      plasma-desktop \
+      plasma-disks \
+      plasma-firewall \
+      plasma-integration \
+      plasma-nm \
+      plasma-pa \
+      plasma-systemmonitor \
+      plasma-thunderbolt \
+      plasma-vault \
+      plasma-welcome \
+      plasma-workspace \
+      plasma-workspace-wallpapers \
+      polkit-kde-agent \
+      powerdevil \
+      print-manager \
+      sddm  \
+      sddm-kcm \
+      spectacle \
+      systemsettings \
+      xdg-desktop-portal-kde && \
+  pacman -S --clean && \
+  rm -rf /var/cache/pacman/pkg/*
 
 RUN pacman -Rns --noconfirm ${DEV_DEPS}
 
@@ -59,5 +119,11 @@ RUN sed -i 's|^HOME=.*|HOME=/var/home|' "/etc/default/useradd"
 RUN mkdir -p /usr/lib/ostree && \
     printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
     tee "/usr/lib/ostree/prepare-root.conf"
+
+FROM scratch
+RUN systemd-sysusers
+    systemctl enable NetworkManager && \
+    systemctl enable sddm && \
+    systemctl enable kde-initial-system-setup.service
 
 RUN bootc container lint
