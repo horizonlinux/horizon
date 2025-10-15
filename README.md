@@ -4,7 +4,7 @@
 
 Arch based distro with with Bootc composefs-native backend. It uses Plasma as the desktop enviroment.
 
-<small>I am so sorry to all Polish users of Horizon. I know that the translation is bad, but Plasma is one of the best DEs</small>
+<div> <small>I am so sorry to all Polish users of Horizon. I know that the translation is bad, but Plasma is one of the best DEs</small> </div>
 
 ## Building
 
