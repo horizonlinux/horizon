@@ -1,4 +1,4 @@
-#  <center align="center"> <img src="https://raw.githubusercontent.com/horizonlinux/horizon/refs/heads/main/horizon%20color.png" </center>
+<center align="center"> <img src="https://raw.githubusercontent.com/horizonlinux/horizon/refs/heads/main/horizon%20color.png" </center>
 
 Arch based distro with with Bootc composefs-native backend. It uses Plasma as the desktop enviroment.
 
