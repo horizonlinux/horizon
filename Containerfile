@@ -44,6 +44,8 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     cmake --build build/ --parallel && \
     cmake --install build/
 
+RUN pacman -Rns --noconfirm ${DEV_DEPS}
+
 RUN pacman -Syyuu --noconfirm \
       aurorae \
       bluedevil \
@@ -102,8 +104,6 @@ RUN pacman -Syyuu --noconfirm \
       xdg-desktop-portal-kde && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
-
-RUN pacman -Rns --noconfirm ${DEV_DEPS}
 
 RUN sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
     dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"'
