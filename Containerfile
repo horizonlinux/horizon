@@ -1,6 +1,6 @@
 FROM docker.io/archlinux/archlinux:latest AS builder
 
-ENV DEV_DEPS="base-devel git rust whois cmake ecm"
+ENV DEV_DEPS="base-devel git rust whois cmake extra-cmake-modules"
 
 ENV DRACUT_NO_XATTR=1
 RUN pacman -Syyuu --noconfirm \
@@ -120,10 +120,10 @@ RUN mkdir -p /usr/lib/ostree && \
     printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
     tee "/usr/lib/ostree/prepare-root.conf"
 
-#FROM scratch
-#RUN systemd-sysusers
-#    systemctl enable NetworkManager && \
-#    systemctl enable sddm && \
-#    systemctl enable kde-initial-system-setup.service
+
+RUN systemd-sysusers
+    systemctl enable NetworkManager && \
+    systemctl enable sddm && \
+    systemctl enable kde-initial-system-setup.service
 
 RUN bootc container lint
