@@ -4,8 +4,6 @@
 
 Arch based distro with with Bootc composefs-native backend. It uses Plasma as the desktop enviroment.
 
-<div> <small>I am so sorry to all Polish users of Horizon. I know that the translation is bad, but Plasma is one of the best DEs</small> </div>
-
 ## Building
 
 In order to get a running arch-bootc system you can run the following steps:
@@ -19,3 +17,6 @@ Then you can run the `bootable.img` as your boot disk in your preferred hypervis
 # Fixes
 
 - `mount /dev/vda2 /sysroot/boot` - You need this to get `bootc status` and other stuff working (`/dev/vda2` is your ESP)
+
+## Note from creator
+I am so sorry to all Polish users of Horizon. I know that the translation is bad, but Plasma is one of the best DEs.
