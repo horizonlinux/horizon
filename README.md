@@ -1,6 +1,4 @@
 <center align="center"> <img style="max-width: 65%;"> src="https://raw.githubusercontent.com/horizonlinux/horizon/refs/heads/main/horizon%20color.png"> </center>
-# ‎ 
-
 Arch based distro with with Bootc composefs-native backend. It uses Plasma as the desktop enviroment.
 
 <small>I am so sorry to all Polish users of Horizon. I know that the translation is bad, but Plasma is one of the best DEs</small>
