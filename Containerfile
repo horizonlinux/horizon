@@ -1,6 +1,10 @@
-FROM docker.io/archlinux/archlinux:latest AS builder
+FROM scratch AS ctx
+# COPY build_files /
 
-ENV DEV_DEPS="base-devel git rust whois cmake extra-cmake-modules"
+# Base Image
+FROM docker.io/archlinux/archlinux:latest
+
+ENV DEV_DEPS="base-devel git rust whois cmake extra-cmake-modules qt6-base qt6-tools"
 
 ENV DRACUT_NO_XATTR=1
 RUN pacman -Syyuu --noconfirm \
@@ -119,7 +123,6 @@ RUN sed -i 's|^HOME=.*|HOME=/var/home|' "/etc/default/useradd"
 RUN mkdir -p /usr/lib/ostree && \
     printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
     tee "/usr/lib/ostree/prepare-root.conf"
-
 
 RUN systemd-sysusers
     systemctl enable NetworkManager && \
