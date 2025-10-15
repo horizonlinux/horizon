@@ -1,6 +1,6 @@
 FROM docker.io/archlinux/archlinux:latest AS builder
 
-ENV DEV_DEPS="base-devel git rust whois cmake"
+ENV DEV_DEPS="base-devel git rust whois cmake ecm"
 
 ENV DRACUT_NO_XATTR=1
 RUN pacman -Syyuu --noconfirm \
@@ -38,7 +38,7 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     cd /tmp/kiss && \
     cmake -B build/ && \
     cmake --build build/ --parallel && \
-    cmake --install build/ && \
+    cmake --install build/
 
 RUN pacman -Syyuu --noconfirm \
       aurorae \
