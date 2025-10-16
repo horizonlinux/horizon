@@ -41,7 +41,7 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     make install && \
     git clone https://invent.kde.org/plasma/plasma-setup.git /tmp/kiss && \
     cd /tmp/kiss && \
-    cmake -B build/ && \
+    cmake -B build/ -DCMAKE_BUILD_TYPE=Release && \
     cmake --build build/ --parallel && \
     cmake --install build/ && \
     systemd-sysusers
@@ -65,6 +65,7 @@ RUN pacman -Syyuu --noconfirm \
       kmenuedit \
       konsole \
       kpipewire \
+      kdeplasma-addons \
       krdp \
       kscreen \
       kscreenlocker \
