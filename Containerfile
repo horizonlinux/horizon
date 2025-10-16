@@ -39,7 +39,7 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     cd /tmp/bootupd && \
     cargo build --release --bins --features systemd-boot && \
     make install && \
-    git https://invent.kde.org/plasma/plasma-setup.git /tmp/kiss && \
+    git clone https://invent.kde.org/plasma/plasma-setup.git /tmp/kiss && \
     cd /tmp/kiss && \
     cmake -B build/ && \
     cmake --build build/ --parallel && \
