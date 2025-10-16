@@ -27,9 +27,7 @@ RUN pacman -Syyuu --noconfirm \
       sudo \
       ${DEV_DEPS} && \
   pacman -S --clean && \
-  rm -rf /var/cache/pacman/pkg/* && \
-  sed -i 's/^#//g' /etc/locale.gen && \
-  locale-gen
+  rm -rf /var/cache/pacman/pkg/*
 
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     git clone https://github.com/bootc-dev/bootc.git /tmp/bootc && \
