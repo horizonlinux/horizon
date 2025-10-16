@@ -28,7 +28,7 @@ RUN pacman -Syyuu --noconfirm \
       ${DEV_DEPS} && \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/* && \
-  sed -i 's/^# *\(.*UTF-8\)/\1/' /etc/locale.gen && \
+  sed -i 's/^#//g' /etc/locale.gen && \
   locale-gen
 
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
