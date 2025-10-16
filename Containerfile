@@ -24,9 +24,12 @@ RUN pacman -Syyuu --noconfirm \
       glib2 \
       ostree \
       shadow \
+      sudo \
       ${DEV_DEPS} && \
   pacman -S --clean && \
-  rm -rf /var/cache/pacman/pkg/*
+  rm -rf /var/cache/pacman/pkg/* && \
+  sed -i 's/^# *\(.*UTF-8\)/\1/' /etc/locale.gen && \
+  locale-gen
 
 RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     git clone https://github.com/bootc-dev/bootc.git /tmp/bootc && \
@@ -38,11 +41,12 @@ RUN --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     cd /tmp/bootupd && \
     cargo build --release --bins --features systemd-boot && \
     make install && \
-    git clone https://invent.kde.org/plasma/kiss.git /tmp/kiss && \
+    git https://invent.kde.org/plasma/plasma-setup.git /tmp/kiss && \
     cd /tmp/kiss && \
     cmake -B build/ && \
     cmake --build build/ --parallel && \
-    cmake --install build/
+    cmake --install build/ && \
+    systemd-sysusers
 
 RUN pacman -Rns --noconfirm ${DEV_DEPS}
 
@@ -124,8 +128,7 @@ RUN mkdir -p /usr/lib/ostree && \
     printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
     tee "/usr/lib/ostree/prepare-root.conf"
 
-RUN systemd-sysusers && \
-    systemctl enable NetworkManager && \
+RUN systemctl enable NetworkManager && \
     systemctl enable sddm && \
     systemctl enable plasma-setup
 
