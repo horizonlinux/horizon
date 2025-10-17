@@ -108,6 +108,13 @@ RUN pacman -Syyuu --noconfirm \
   pacman -S --clean && \
   rm -rf /var/cache/pacman/pkg/*
 
+RUN systemctl enable NetworkManager && \
+    systemctl enable sddm && \
+    systemctl enable plasma-setup
+
+RUN sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
+    dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"'
+
 RUN rm -rf /var /boot /home /root /usr/local /srv && \
     mkdir -p /var /boot /sysroot && \
     ln -s /var/home /home && \
@@ -123,12 +130,4 @@ RUN sed -i 's|^HOME=.*|HOME=/var/home|' "/etc/default/useradd"
 RUN mkdir -p /usr/lib/ostree && \
     printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
     tee "/usr/lib/ostree/prepare-root.conf"
-
-RUN systemctl enable NetworkManager && \
-    systemctl enable sddm && \
-    systemctl enable plasma-setup
-
-RUN sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
-    dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"'
-
 RUN bootc container lint
