@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-pacman -Syyuu --noconfirm base-devel git rust whois cmake extra-cmake-modules qt6-base qt6-tools kf6 libkscreen
+pacman -Syyuu --noconfirm base-devel git rust whois cmake extra-cmake-modules qt6-base qt6-tools kf6 libkscreen plasma-workspace
 pacman -S --clean
 rm -rf /var/cache/pacman/pkg/*
 git clone https://invent.kde.org/plasma/plasma-setup.git /tmp/plasma-setup-build
