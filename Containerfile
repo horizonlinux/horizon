@@ -10,10 +10,10 @@ ENV DRACUT_NO_XATTR=1
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
-    /ctx/base-system.sh && \
-    /ctx/bootables.sh && \
-    /ctx/plasma.sh && \
-    /ctx/kernel.sh && \
-    /ctx/services.sh && \
-    /ctx/bootc-fixes.sh && \
+    /ctx/base-system.sh; \
+    /ctx/bootables.sh; \
+    /ctx/plasma.sh; \
+    /ctx/kernel.sh; \
+    /ctx/services.sh; \
+    /ctx/bootc-fixes.sh; \
     bootc container lint
