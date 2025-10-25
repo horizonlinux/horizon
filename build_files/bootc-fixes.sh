@@ -14,6 +14,8 @@ ln -s /var/usrlocal /usr/local
 sed -i 's|^HOME=.*|HOME=/var/home|' "/etc/default/useradd"
 
 # Necessary for `bootc install`
-mkdir -p /usr/lib/ostree && \
+mkdir -p /usr/lib/ostree
 printf  "[composefs]\nenabled = yes\n[sysroot]\nreadonly = true\n" | \
 tee "/usr/lib/ostree/prepare-root.conf"
+
+systemd-sysusers
