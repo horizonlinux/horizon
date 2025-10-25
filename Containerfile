@@ -13,7 +13,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/base-system.sh; \
     /ctx/bootables.sh; \
     /ctx/plasma.sh; \
+    /ctx/plasma-setup.sh; \
     /ctx/kernel.sh; \
-    /ctx/services.sh; \
     /ctx/bootc-fixes.sh; \
+    /ctx/services.sh; \
     bootc container lint

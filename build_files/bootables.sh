@@ -2,24 +2,7 @@
 
 set -ouex pipefail
 
-pacman -Syyuu --noconfirm \
-      base \
-      dracut \
-      linux \
-      linux-firmware \
-      ostree \
-      systemd \
-      btrfs-progs \
-      e2fsprogs \
-      xfsprogs \
-      dosfstools \
-      skopeo \
-      dbus \
-      dbus-glib \
-      glib2 \
-      ostree \
-      shadow \
-      ${DEV_DEPS}
+pacman -Syyuu --noconfirm ${DEV_DEPS}
 pacman -S --clean
 rm -rf /var/cache/pacman/pkg/*
 git clone https://github.com/bootc-dev/bootc.git /tmp/bootc

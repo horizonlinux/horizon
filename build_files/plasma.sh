@@ -13,7 +13,7 @@ pacman -Syyuu --noconfirm \
       kde-cli-tools \
       kde-gtk-config \
       kdecoration \
-      kdeplasma-addons \
+      kdelasma-addons \
       kglobalacceld \
       kinfocenter \
       kmenuedit \

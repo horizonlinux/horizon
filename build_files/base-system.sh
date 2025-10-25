@@ -19,6 +19,6 @@ pacman -Syyuu --noconfirm \
       glib2 \
       ostree \
       shadow \
-      sudo \
+      sudo
 pacman -S --clean
 rm -rf /var/cache/pacman/pkg/*
