@@ -5,9 +5,9 @@ set -ouex pipefail
 pacman -Syyuu --noconfirm base-devel git rust whois cmake extra-cmake-modules qt6-base qt6-tools kf6
 pacman -S --clean
 rm -rf /var/cache/pacman/pkg/*
-BUILD_DIR="/tmp/plasma-setup-build"
-git clone https://invent.kde.org/plasma/plasma-setup.git $BUILD_DIR
-cmake -B $BUILD_DIR -DCMAKE_BUILD_TYPE=Release
-cmake --build $BUILD_DIR --parallel
-cmake --install $BUILD_DIR
-pacman -Rns --noconfirm base-devel git rust whois cmake extra-cmake-modules
+git clone https://invent.kde.org/plasma/plasma-setup.git /tmp/plasma-setup-build
+cd /tmp/plasma-setup-build
+cmake -B /tmp/plasma-setup-build -DCMAKE_BUILD_TYPE=Release
+cmake --build /tmp/plasma-setup-build --parallel
+cmake --install /tmp/plasma-setup-build
+pacman -Rns --noconfirm base-devel rust whois cmake extra-cmake-modules
