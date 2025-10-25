@@ -19,4 +19,4 @@ Then you can run the `bootable.img` as your boot disk in your preferred hypervis
 - `mount /dev/vda2 /sysroot/boot` - You need this to get `bootc status` and other stuff working (`/dev/vda2` is your ESP)
 
 ## Note from creator
-I am so sorry to all Polish users of Horizon. I know that the translation is bad, but Plasma is one of the best DEs.
+I am so sorry to all Polish users of Horizon. I know that the Plasmatranslation is bad, but Plasma is one of the best DEs.
