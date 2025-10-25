@@ -60,4 +60,6 @@ pacman -Syyuu --noconfirm \
       systemsettings \
       xdg-desktop-portal-kde
 pacman -S --clean
+systemctl enable NetworkManager
+systemctl enable sddm
 rm -rf /var/cache/pacman/pkg/*
