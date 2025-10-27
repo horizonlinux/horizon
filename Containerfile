@@ -2,12 +2,11 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM docker.io/archlinux/archlinux:latest
+FROM docker.io/archlinux/archlinux:latest AS builder
 
 ENV DEV_DEPS="base-devel git rust whois"
 
 ENV DRACUT_NO_XATTR=1
-
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp --mount=type=tmpfs,dst=/root \
     /ctx/base-system.sh; \
