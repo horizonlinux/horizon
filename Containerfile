@@ -13,15 +13,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/base-system.sh; \
     /ctx/bootables.sh; \
     /ctx/plasma.sh; \
-    # /ctx/plasma-setup.sh; \
+    /ctx/plasma-setup.sh; \
     /ctx/services.sh;
 
 # Setup a temporary root passwd (changeme) for dev purposes
 # TODO: Replace this for a more robust option when in prod
 RUN usermod -p "$(echo "changeme" | mkpasswd -s)" root
 
-RUN sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && \
-    dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"'
+RUN sh -c 'export KERNEL_VERSION="$(basename "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)")" && dracut --force --no-hostonly --reproducible --zstd --verbose --kver "$KERNEL_VERSION"  "/usr/lib/modules/$KERNEL_VERSION/initramfs.img"'
 
 RUN rm -rf /var /boot /home /root /usr/local /srv && \
     mkdir -p /var /boot /sysroot && \

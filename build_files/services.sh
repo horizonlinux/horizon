@@ -2,4 +2,4 @@
 
 set -ouex pipefail
 
-#systemctl enable plasma-setup
+systemctl enable plasma-setup
