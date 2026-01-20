@@ -36,10 +36,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf config-manager --set-enabled crb && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
-    dnf install -y plasma-desktop plasma-nm konsole dolphin plasma-setup plasma-login-manager flatpak && \
+    dnf install -y plasma-desktop plasma-nm konsole dolphin plasma-setup sddm sddm-breeze flatpak && \
     systemctl set-default graphical.target && \
-    systemctl enable plasmalogin && \
-    systemctl enable plasma-setup
+    systemctl enable sddm && \
+    systemctl enable plasma-setup.service
     
 ### LINTING
 ## Verify final image and contents are correct.
