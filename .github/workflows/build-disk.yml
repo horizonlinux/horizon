@@ -68,7 +68,6 @@ jobs:
             --privileged \
             -v /dev:/dev \
             -v "${SOURCE_DIR}:/output" \
-            -v ./assets/iso:/iso \
             registry.fedoraproject.org/fedora:latest \
             bash -c 'dnf install -y lorax \
             && mkdir /images \
