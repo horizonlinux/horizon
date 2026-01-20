@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite:stable
+FROM quay.io/centos-bootc/centos-bootc:stream10
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -33,7 +33,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build.sh
+    dnf config-manager --set-enabled crb && \
+    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
+    dnf update -y && \
+    dnf install -y plasma-desktop plasma-nm konsole dolphin plasma-setup plasma-login-manager flatpak && \
+    systemctl enable plasma-setup && \
+    systemctl enable plasmalogin
     
 ### LINTING
 ## Verify final image and contents are correct.
