@@ -37,7 +37,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
     dnf install -y plasma-desktop plasma-nm konsole dolphin plasma-setup sddm sddm-breeze flatpak && \
-    systemctl set-default graphical.target && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service
     
