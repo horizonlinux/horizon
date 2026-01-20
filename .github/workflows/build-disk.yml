@@ -1,72 +1,29 @@
 ---
-name: Build disk images
-
+name: Build disk image
 on:
+  schedule:
+    - cron: "0 1 * * TUE"
   workflow_dispatch:
-    inputs:
-      upload-to-s3:
-        description: "Upload to S3"
-        required: false
-        default: false
-        type: boolean
-      platform:
-        required: true
-        type: choice
-        options:
-          - amd64
-          - arm64
-  pull_request:
-    branches:
-      - main
-    paths:
-      - './disk_config/disk.toml'
-      - './disk_config/iso.toml'
-      - './.github/workflows/build-disk.yml'
-
-env:
-  IMAGE_NAME: ${{ github.event.repository.name }} # output of build.yml, keep in sync
-  IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
-  DEFAULT_TAG: "latest"
-  BIB_IMAGE: "ghcr.io/lorbuschris/bootc-image-builder:20250608" # "quay.io/centos-bootc/bootc-image-builder:latest" - see https://github.com/osbuild/bootc-image-builder/pull/954
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
-  cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build disk images
-    runs-on: ${{ inputs.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
-    strategy:
-      fail-fast: false
-      matrix:
-        disk-type: ["qcow2", "anaconda-iso"]
+  build_release:
+    name: Build and release disk image
     permissions:
       contents: read
       packages: read
       id-token: write
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ["amd64", "arm64"]
+    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
 
     steps:
-      - name: Prepare environment
-        run: |
-          USER_UID=$(id -u)
-          USER_GID=$(id -g)
-          # Concatenate the types with a hyphen
-          DISK_TYPE=$(echo "${{ matrix.disk-type }}" | tr ' ' '-')
-          # Lowercase the image uri
-          echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
-          echo "DISK_TYPE=${DISK_TYPE}" >> ${GITHUB_ENV}
-          echo "USER_UID=${USER_UID}" >> ${GITHUB_ENV}
-          echo "USER_GID=${USER_GID}" >> ${GITHUB_ENV}
-
-      - name: Install dependencies
-        if: inputs.platform == 'arm64'
-        run: |
-          set -x
-          sudo apt update -y
-          sudo apt install -y \
-            podman
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        with:
+          submodules: true
 
       - name: Maximize build space
         if: inputs.platform != 'arm64'
@@ -74,42 +31,72 @@ jobs:
         with:
           remove-codeql: true
 
-      - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
-      - name: Build disk images
-        id: build
+      - name: Build ISO
+        id: build-iso
         uses: osbuild/bootc-image-builder-action@main
         with:
-          builder-image: ${{ env.BIB_IMAGE }}
-          config-file: ${{ matrix.disk-type == 'anaconda-iso' && './disk_config/iso.toml' || './disk_config/disk.toml' }}
-          image: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
-          chown: ${{ env.USER_UID }}:${{ env.USER_GID }}
-          types: ${{ matrix.disk-type }}
+          config-file: './iso.toml'
+          image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+          types: anaconda-iso
+          rootfs: btrfs
           additional-args: --use-librepo=True
 
-      - name: Upload disk images and Checksum to Job Artifacts
-        if: inputs.upload-to-s3 != true && github.event_name != 'pull_request'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+      - name: Upload Artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v5
         with:
-          path: ${{ steps.build.outputs.output-directory }}
+          name: ${{ github.event.repository.name }}-${{ matrix.platform }}
+          path: ${{ steps.build-iso.outputs.output-directory }}
           if-no-files-found: error
           retention-days: 0
           compression-level: 0
           overwrite: true
-      
+
+      - name: Brand ISOs
+        env:
+          PLATFORM: ${{ matrix.platform }}
+          IMAGE_NAME: "${{ github.event.repository.name }}"
+          SOURCE_DIR: ${{ steps.build-iso.outputs.output-directory }}
+        run: |
+          sudo mv "${SOURCE_DIR}"/*/*.iso "${SOURCE_DIR}/horizon-unbranded.iso"
+          sudo podman rmi -a -f
+          podman rmi -a -f
+          sudo podman run \
+            --rm \
+            -it \
+            --pull=newer \
+            --privileged \
+            -v /dev:/dev \
+            -v "${SOURCE_DIR}:/output" \
+            -v ./assets/iso:/iso \
+            registry.fedoraproject.org/fedora:latest \
+            bash -c 'dnf install -y lorax \
+            && mkdir /images \
+            && cd /iso/product && find . | cpio -c -o | gzip -9cv > /images/product.img && cd / \
+            && mkksiso \
+                --add /images \
+                --volid horizon-boot \
+                --replace "vmlinuz" "vmlinuz inst.resolution=1280x800" \
+                /output/horizon-unbranded.iso \
+                /output/horizon.iso'
+          sudo mv "${SOURCE_DIR}"/horizon.iso "${SOURCE_DIR}/${IMAGE_NAME}-${PLATFORM}.iso"
+          sha256sum "${SOURCE_DIR}/${IMAGE_NAME}-${PLATFORM}.iso" | sudo tee "${SOURCE_DIR}/${IMAGE_NAME}-${PLATFORM}.iso-CHECKSUM"
+          sudo rm -f "${SOURCE_DIR}/horizon-unbranded.iso"
+
       - name: Upload to S3
-        if: inputs.upload-to-s3 == true && github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         shell: bash
         env:
-          RCLONE_CONFIG_S3_TYPE: s3
-          RCLONE_CONFIG_S3_PROVIDER: ${{ secrets.S3_PROVIDER }}
           RCLONE_CONFIG_S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
-          RCLONE_CONFIG_S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-          RCLONE_CONFIG_S3_REGION: ${{ secrets.S3_REGION }}
           RCLONE_CONFIG_S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
-          SOURCE_DIR: ${{ steps.build.outputs.output-directory }}
+          RCLONE_CONFIG_S3_PROVIDER: ${{ secrets.S3_PROVIDER }}
+          RCLONE_CONFIG_S3_REGION: ${{ secrets.S3_REGION }}
+          RCLONE_CONFIG_S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          RCLONE_CONFIG_S3_TYPE: s3
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          SOURCE_DIR: ${{ steps.build-iso.outputs.output-directory }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y rclone
-          rclone copy $SOURCE_DIR S3:${{ secrets.S3_BUCKET_NAME }}
+          sudo apt update -y
+          sudo apt install -y rclone
+          rclone copy "${SOURCE_DIR}"/*.iso "S3:${S3_BUCKET_NAME}"
+          rclone copy "${SOURCE_DIR}"/*.iso-CHECKSUM "S3:${S3_BUCKET_NAME}"
