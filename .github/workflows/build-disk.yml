@@ -4,12 +4,6 @@ on:
   schedule:
     - cron: "0 1 * * TUE"
   workflow_dispatch:
-    inputs:
-      upload-to-s3:
-        description: "Upload to S3"
-        required: false
-        default: false
-        type: boolean
 
 jobs:
   build_release:
@@ -47,36 +41,6 @@ jobs:
           rootfs: btrfs
           additional-args: --use-librepo=True
 
-      - name: Brand ISOs
-        env:
-          PLATFORM: ${{ matrix.platform }}
-          IMAGE_NAME: "${{ github.event.repository.name }}"
-          SOURCE_DIR: ${{ steps.build-iso.outputs.output-directory }}
-        run: |
-          sudo mv "${SOURCE_DIR}"/*/*.iso "${SOURCE_DIR}/horizon-unbranded.iso"
-          sudo podman rmi -a -f
-          podman rmi -a -f
-          sudo podman run \
-            --rm \
-            -it \
-            --pull=newer \
-            --privileged \
-            -v /dev:/dev \
-            -v "${SOURCE_DIR}:/output" \
-            registry.fedoraproject.org/fedora:latest \
-            bash -c 'dnf install -y lorax \
-            && mkdir /images \
-            && cd /iso/product && find . | cpio -c -o | gzip -9cv > /images/product.img && cd / \
-            && mkksiso \
-                --add /images \
-                --volid horizon-boot \
-                --replace "vmlinuz" "vmlinuz inst.resolution=1280x800" \
-                /output/horizon-unbranded.iso \
-                /output/horizon.iso'
-          sudo mv "${SOURCE_DIR}"/horizon.iso "${SOURCE_DIR}/${IMAGE_NAME}-${PLATFORM}.iso"
-          sha256sum "${SOURCE_DIR}/${IMAGE_NAME}-${PLATFORM}.iso" | sudo tee "${SOURCE_DIR}/${IMAGE_NAME}-${PLATFORM}.iso-CHECKSUM"
-          sudo rm -f "${SOURCE_DIR}/horizon-unbranded.iso"
-
       - name: Upload Artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v5
@@ -87,21 +51,3 @@ jobs:
           retention-days: 0
           compression-level: 0
           overwrite: true
-
-      - name: Upload to S3
-        if: inputs.upload-to-s3 == true && github.event_name != 'pull_request'
-        shell: bash
-        env:
-          RCLONE_CONFIG_S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
-          RCLONE_CONFIG_S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
-          RCLONE_CONFIG_S3_PROVIDER: ${{ secrets.S3_PROVIDER }}
-          RCLONE_CONFIG_S3_REGION: ${{ secrets.S3_REGION }}
-          RCLONE_CONFIG_S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-          RCLONE_CONFIG_S3_TYPE: s3
-          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-          SOURCE_DIR: ${{ steps.build-iso.outputs.output-directory }}
-        run: |
-          sudo apt update -y
-          sudo apt install -y rclone
-          rclone copy "${SOURCE_DIR}"/*.iso "S3:${S3_BUCKET_NAME}"
-          rclone copy "${SOURCE_DIR}"/*.iso-CHECKSUM "S3:${S3_BUCKET_NAME}"
