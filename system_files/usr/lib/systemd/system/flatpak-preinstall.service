@@ -1,0 +1,21 @@
+Description=Preinstall Flatpaks
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/usr/bin/flatpak
+ConditionPathExists=!/var/lib/horizon/preinstall-finished
+Documentation=man:flatpak-preinstall(1)
+
+[Service]
+Type=oneshot
+ExecStart=mkdir -p /var/lib/horizon
+ExecStart=/usr/bin/flatpak preinstall -y
+ExecStart=touch /var/lib/horizon/preinstall-finished
+RemainAfterExit=true
+Restart=on-failure
+RestartSec=30
+
+StartLimitIntervalSec=600
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
