@@ -38,7 +38,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf config-manager --set-enabled crb && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
-    dnf group install -x plasma-discover -x plasma-discover-notifier -y KDE && \
+    dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
     dnf install -y \
         btrfs-progs \
         buildah \
@@ -66,6 +66,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         xhost && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
+    systemctl enable flatpak-install.service && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
     mkdir -p /etc/flatpak/remotes.d/ && \
