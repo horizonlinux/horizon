@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM quay.io/centos-bootc/centos-bootc:stream10
+FROM quay.io/almalinuxorg/almalinux-bootc:10
 
 COPY system_files /
 
