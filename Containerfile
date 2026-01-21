@@ -5,6 +5,8 @@ COPY build_files /
 # Base Image
 FROM quay.io/centos-bootc/centos-bootc:stream10
 
+COPY system_files /
+
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
 # FROM ghcr.io/ublue-os/bluefin-nvidia:stable
@@ -64,7 +66,17 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         xhost && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
-    mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md'
+    systemctl enable flatpak-preinstall.service && \
+    mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
+    dnf -y copr enable ublue-os/flatpak-test && \
+    dnf -y copr disable ublue-os/flatpak-test && \
+    dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak flatpak && \
+    dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak-libs flatpak-libs && \
+    dnf -y --repo=copr:copr.fedorainfracloud.org:ublue-os:flatpak-test swap flatpak-session-helper flatpak-session-helper && \
+    rpm -q flatpak --qf "%{NAME} %{VENDOR}\n" | grep ublue-os && \
+    mkdir -p /etc/flatpak/remotes.d/ && \
+    curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
+    systemctl enable flatpak-add-flathub-repos.service
     
 ### LINTING
 ## Verify final image and contents are correct.
