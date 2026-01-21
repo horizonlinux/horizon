@@ -3,7 +3,7 @@ FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM quay.io/almalinuxorg/almalinux-bootc:10
+FROM quay.io/centos-bootc/centos-bootc:stream10
 
 COPY system_files /
 
@@ -35,12 +35,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
+    dnf config-manager --set-enabled crb && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
     dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
     dnf install -y \
         btrfs-progs \
         buildah \
+        containerd \
         dolphin \
         ddcutil \
         distrobox \
@@ -56,12 +58,14 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         ntfs-3g \
         pcsc-lite \
         powertop \
+        plasma-setup \
         system-reinstall-bootc \
         tuned-ppd \ 
         wireguard-tools \
         xdg-desktop-portal-kde \
         xhost && \
     systemctl enable sddm && \
+    systemctl enable plasma-setup.service && \
     sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
