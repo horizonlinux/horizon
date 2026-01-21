@@ -66,12 +66,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         xhost && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
-    systemctl enable flatpak-install.service && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
     mkdir -p /etc/flatpak/remotes.d/ && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
-    systemctl enable flatpak-add-flathub-repos.service
+    systemctl enable flatpak-add-flathub-repos.service && \
+    systemctl enable flatpak-install.service
     
 ### LINTING
 ## Verify final image and contents are correct.
