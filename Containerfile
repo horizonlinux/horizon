@@ -31,6 +31,9 @@ COPY system_files /
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
+ENV DEV_DEPS="git cmake(Qt6Core) cmake(Qt6Gui) cmake(Qt6Qml) cmake(Qt6QuickControls2) cmake(Qt6Svg) cmake(Qt6Widgets) cmake(Qt6DBus) cmake(KF6I18n) cmake(KF6Package) cmake(KF6Auth) cmake(KF6CoreAddons)  cmake(KF6Config)  cmake(KF6Screen) cmake(LibKWorkspace) cracklib-devel extra-cmake-modules  gcc-c++ git-core systemd-rpm-macros kf6-rpm-macros libappstream-glib"
+ENV KISS_DEPS="dbus-common kf6-filesystem kf6-kauth"
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
@@ -56,12 +59,20 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         ntfs-3g \
         pcsc-lite \
         powertop \
-        https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/$(uname -m)/os/Packages/p/plasma-setup-6.5.90-1.fc44.$(uname -m).rpm \
         system-reinstall-bootc \
         tuned-ppd \ 
         wireguard-tools \
         xdg-desktop-portal-kde \
         xhost && \
+    dnf install y ${DEV_DEPS} && \
+    git clone https://invent.kde.org/plasma/plasma-setup.git /tmp/kiss && \
+    cd /tmp/kiss && \
+    cmake -B build/ && \
+    cmake --build build/ --parallel && \
+    sudo cmake --install build/ && \
+    cd / && \
+    systemd-sysusers && \
+    dnf remove -y ${DEV_DEPS} && dnf install -y ${KISS_DEPS} && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
     sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
