@@ -57,7 +57,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         ntfs-3g \
         pcsc-lite \
         powertop \
-        plasma-setup \
+        https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/$(uname -m)/os/Packages/p/plasma-setup-6.5.90-1.fc44.$(uname -m).rpm \
         system-reinstall-bootc \
         tuned-ppd \ 
         wireguard-tools \
