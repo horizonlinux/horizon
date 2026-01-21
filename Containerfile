@@ -64,7 +64,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         wireguard-tools \
         xdg-desktop-portal-kde \
         xhost && \
-    dnf install y ${DEV_DEPS} && \
+    dnf install -y ${DEV_DEPS} && \
     git clone https://invent.kde.org/plasma/plasma-setup.git /tmp/kiss && \
     cd /tmp/kiss && \
     cmake -B build/ && \
