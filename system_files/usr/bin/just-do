@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+just -f /usr/share/horizon/just/00-start.just "${@}"
