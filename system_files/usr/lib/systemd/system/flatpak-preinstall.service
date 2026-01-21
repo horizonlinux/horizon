@@ -1,14 +1,14 @@
-[Unit]
 Description=Preinstall Flatpaks
 After=network-online.target
 Wants=network-online.target
 ConditionPathExists=/usr/bin/flatpak
 ConditionPathExists=!/var/lib/horizon/preinstall-finished
+Documentation=man:flatpak-preinstall(1)
 
 [Service]
 Type=oneshot
 ExecStart=mkdir -p /var/lib/horizon
-ExecStart=/usr/bin/flatpak install --system -y org.kde.ark io.github.kolunmi.Bazaar org.kde.elisa org.kde.filelight org.mozilla.firefox com.github.tchx84.Flatseal org.kde.gwenview org.kde.okular org.kde.skanpage org.videolan.VLC/aarch64 io.github.flattool.Warehouse
+ExecStart=/usr/bin/flatpak preinstall -y
 ExecStart=touch /var/lib/horizon/preinstall-finished
 RemainAfterExit=true
 Restart=on-failure
