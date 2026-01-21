@@ -63,7 +63,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         xdg-desktop-portal-kde \
         xhost && \
     systemctl enable sddm && \
-    systemctl enable plasma-setup.service
+    systemctl enable plasma-setup.service && \
+    mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md'
     
 ### LINTING
 ## Verify final image and contents are correct.
