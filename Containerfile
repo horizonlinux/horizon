@@ -66,6 +66,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         xhost && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
+    sed -i '/<default>applications:systemsettings.desktop,applications:org.kde.discover.desktop,preferred://filemanager,preferred://browser/c\<default>applications:systemsettings.desktop,applications:io.github.kolunmi.Bazaar.desktop,preferred://filemanager,preferred://browser' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
     mkdir -p /etc/flatpak/remotes.d/ && \
