@@ -71,7 +71,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /etc/flatpak/remotes.d/ && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
     systemctl enable flatpak-add-flathub-repos.service && \
-    systemctl enable flatpak-install.service
+    systemctl enable flatpak-preinstall.service
     
 ### LINTING
 ## Verify final image and contents are correct.
