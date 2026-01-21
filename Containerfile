@@ -36,7 +36,38 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf config-manager --set-enabled crb && \
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
-    dnf install -y plasma-desktop plasma-nm konsole dolphin plasma-setup sddm sddm-breeze flatpak && \
+    dnf install -y \
+        btrfs-progs \
+        buildah \
+        containerd \
+        dolphin \
+        ddcutil \
+        distrobox \
+        flatpak \
+        fastfetch \
+        firewalld \
+        glow \
+        gum \
+        hplip \
+        jetbrains-mono-fonts-all \
+        just \
+        konsole \
+        ntfs-3g \
+        pcsc-lite \
+        powertop \
+        plasma-desktop \
+        plasma-disks \
+        plasma-nm \
+        plasma-setup \
+        plasma-workspace \
+        system-reinstall-bootc 
+        sddm \
+        sddm-breeze \
+        system-reinstall-bootc 
+        tuned-ppd \ 
+        wireguard-tools \
+        xdg-desktop-portal-kde \
+        xhost && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service
     
