@@ -60,7 +60,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         plasma-nm \
         plasma-setup \
         plasma-workspace \
-        system-reinstall-bootc 
+        system-reinstall-bootc \
         sddm \
         sddm-breeze \
         system-reinstall-bootc 
