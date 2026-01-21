@@ -67,6 +67,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
     systemctl enable flatpak-preinstall.service && \
+    chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
     dnf -y copr enable ublue-os/flatpak-test && \
     dnf -y copr disable ublue-os/flatpak-test && \
