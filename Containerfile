@@ -41,7 +41,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf install -y \
         btrfs-progs \
         buildah \
-        containerd \
         dolphin \
         ddcutil \
         distrobox \
