@@ -1,4 +1,6 @@
-Name="Horizon"
+NAME="Horizon"
+VERSION="LTS"
+VERSION_ID="LTS"
 ID="horizon"
 ID_LIKE="almalinux rhel centos fedora"
 PRETTY_NAME="Horizon"
