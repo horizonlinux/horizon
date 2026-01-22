@@ -39,7 +39,7 @@ jobs:
           image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
           types: anaconda-iso
           rootfs: btrfs
-          additional-args: --use-librepo=True
+          additional-args: --use-librepo=False
 
       - name: Upload Artifact
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v5
