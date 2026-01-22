@@ -66,7 +66,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         wireguard-tools \
         xdg-desktop-portal-kde \
         xhost && \
-    sh -c 'ausearch -c tuned-ppd --raw | audit2allow -M tuned_ppd_local' && \
     systemctl enable sddm && \
     systemctl enable plasma-setup.service && \
     sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
