@@ -55,8 +55,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         just \
         konsole \
         ntfs-3g \
+        open-vm-tools \
         pcsc-lite \
         powertop \
+        qemu-guest-agent \
+        spice-vdagent \
+        spice-webdavd \
         system-reinstall-bootc \
         tuned-ppd \ 
         wireguard-tools \
