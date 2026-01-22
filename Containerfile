@@ -37,7 +37,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     dnf install -y epel-release && \
     dnf update -y && \
-    dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
+    dnf group install -x plasma-lookandfeel-fedora -x f42-backgrounds-base -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
     dnf install -y \
         audit \
         btrfs-progs \
