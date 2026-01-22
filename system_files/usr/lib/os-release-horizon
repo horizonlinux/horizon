@@ -1,0 +1,7 @@
+Name="Horizon"
+ID="horizon"
+ID_LIKE="almalinux rhel centos fedora"
+PRETTY_NAME="Horizon"
+ANSI_COLOR="0;34"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:horizon:horizon:lts"
