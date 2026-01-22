@@ -35,7 +35,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    dnf install -y https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/$(uname -m)/os/Packages/g/generic-logos-18.0.0-27.fc44.noarch.rpm && \
     dnf install -y epel-release && \
     dnf update -y && \
     dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
@@ -70,7 +69,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /etc/flatpak/remotes.d/ && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
     systemctl enable flatpak-add-flathub-repos.service && \
-    systemctl enable flatpak-preinstall.service
+    systemctl enable flatpak-preinstall.service && \
+    mv /usr/lib/os-release-horizon /usr/lib/os-release
     
 ### LINTING
 ## Verify final image and contents are correct.
