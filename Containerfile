@@ -62,7 +62,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         plasma-setup \
         qemu-guest-agent \
         spice-vdagent \
-        spice-webdavd \
         system-reinstall-bootc \
         tuned-ppd \ 
         wireguard-tools \
