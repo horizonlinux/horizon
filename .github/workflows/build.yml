@@ -11,6 +11,7 @@ on:
       - main
     paths-ignore:
       - "**/README.md"
+      - "**/iso.toml"
   workflow_dispatch:
 
 env:
