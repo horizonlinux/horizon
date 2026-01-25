@@ -49,6 +49,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         flatpak \
         fastfetch \
         firewalld \
+        git \
         glow \
         gum \
         hplip \
@@ -75,7 +76,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /etc/flatpak/remotes.d/ && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
     systemctl enable flatpak-add-flathub-repos.service && \
-    systemctl enable flatpak-preinstall.service
+    systemctl enable flatpak-preinstall.service && \
+    git clone https://github.com/horizonlinux/horizon-logos.git /tmp/horizon-logos-test && \
+    rm -rf /usr/share/anaconda/theme && \
+    mv /tmp/horizon-logos-test/anaconda/theme usr/share/anaconda/theme
     
 ### LINTING
 ## Verify final image and contents are correct.
