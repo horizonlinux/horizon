@@ -78,8 +78,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     systemctl enable flatpak-add-flathub-repos.service && \
     systemctl enable flatpak-preinstall.service && \
     git clone https://github.com/horizonlinux/horizon-logos.git /tmp/horizon-logos-test && \
-    rm -rf /usr/share/anaconda/theme && \
-    mv /tmp/horizon-logos-test/anaconda/theme usr/share/anaconda/theme
+    rm -rf /usr/share/anaconda/pixmaps && \
+    mv /tmp/horizon-logos-test/anaconda/pixmaps /usr/share/anaconda/pixmaps
     
 ### LINTING
 ## Verify final image and contents are correct.
