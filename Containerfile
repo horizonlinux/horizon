@@ -39,35 +39,24 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf update -y && \
     dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
     dnf install -y \
-        audit \
-        btrfs-progs \
-        buildah \
         containerd \
         dolphin \
-        ddcutil \
         distrobox \
         flatpak \
         fastfetch \
         firewalld \
         git \
-        glow \
-        gum \
-        hplip \
-        jetbrains-mono-fonts-all \
         just \
         konsole \
         ntfs-3g \
         open-vm-tools \
-        pcsc-lite \
         powertop \
         plasma-setup \
         qemu-guest-agent \
         spice-vdagent \
         system-reinstall-bootc \
         tuned-ppd \ 
-        wireguard-tools \
-        xdg-desktop-portal-kde \
-        xhost && \
+        xdg-desktop-portal-kde && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
     sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
@@ -76,7 +65,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /etc/flatpak/remotes.d/ && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
     systemctl enable flatpak-add-flathub-repos.service && \
-    systemctl enable flatpak-preinstall.service && \
     git clone https://github.com/horizonlinux/horizon-logos.git /tmp/horizon-logos-test && \
     rm -rf /usr/share/anaconda/pixmaps && \
     mv /tmp/horizon-logos-test/anaconda/pixmaps /usr/share/anaconda/pixmaps
