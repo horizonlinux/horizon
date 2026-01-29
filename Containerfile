@@ -15,8 +15,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf update -y && \
     dnf -y copr enable horizonproject/horizon && \
     dnf update -y && \
-    dnf install -y horizon-logos horizon-backgrounds horizon-themes horizon-kde-settings horizon-kde-settings-plasma horizon-kde-settings-sddm && \
-    dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
+    dnf install -y -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier horizon-logos horizon-backgrounds horizon-themes horizon-kde-settings horizon-kde-settings-plasma horizon-kde-settings-sddm && \
+    dnf group install KDE -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y  && \
     dnf install -y \
         containerd \
         dolphin \
