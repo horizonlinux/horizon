@@ -7,36 +7,15 @@ FROM quay.io/centos-bootc/centos-bootc:stream10
 
 COPY system_files /
 
-## Other possible base images include:
-# FROM ghcr.io/ublue-os/bazzite:latest
-# FROM ghcr.io/ublue-os/bluefin-nvidia:stable
-# 
-# ... and so on, here are more base images
-# Universal Blue Images: https://github.com/orgs/ublue-os/packages
-# Fedora base image: quay.io/fedora/fedora-bootc:41
-# CentOS base images: quay.io/centos-bootc/centos-bootc:stream10
-
-### [IM]MUTABLE /opt
-## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
-## make it mutable/writable for users. However, some packages write files to this directory,
-## thus its contents might be wiped out when bootc deploys an image, making it troublesome for
-## some packages. Eg, google-chrome, docker-desktop.
-##
-## Uncomment the following line if one desires to make /opt immutable and be able to be used
-## by the package manager.
-
-# RUN rm /opt && mkdir /opt
-
-### MODIFICATIONS
-## make modifications desired in your image and install packages by modifying the build.sh script
-## the following RUN directive does all the things required to run "build.sh" as recommended.
-
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
+    dnf -y copr enable horizonproject/horizon && \
+    dnf update -y && \
+    dnf install -y horizon-logos horizon-backgrounds horizon-themes horizon-kde-settings horizon-kde-settings-plasma horizon-kde-settings-sddm && \
     dnf group install -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -y KDE && \
     dnf install -y \
         containerd \
@@ -51,7 +30,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         ntfs-3g \
         open-vm-tools \
         powertop \
-        plasma-setup \
+        horizon-plasma-setup \
         qemu-guest-agent \
         spice-vdagent \
         system-reinstall-bootc \
@@ -65,9 +44,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     mkdir -p /etc/flatpak/remotes.d/ && \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
     systemctl enable flatpak-add-flathub-repos.service && \
-    git clone https://github.com/horizonlinux/horizon-logos.git /tmp/horizon-logos-test && \
-    rm -rf /usr/share/anaconda/pixmaps && \
-    mv /tmp/horizon-logos-test/anaconda/pixmaps /usr/share/anaconda/pixmaps
+    rpm --erase --nodeps plasma-lookandfeel-fedora && \
+    rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedora.desktop/ && \
+    rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/ && \
+    rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/
     
 ### LINTING
 ## Verify final image and contents are correct.
