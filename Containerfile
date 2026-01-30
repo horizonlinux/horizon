@@ -48,7 +48,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     rpm --erase --nodeps plasma-lookandfeel-fedora && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedora.desktop/ && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/ && \
-    rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/
+    rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
+    rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
+    glib-compile-schemas /usr/share/glib-2.0/schemas/gschemas.compiled
     
 ### LINTING
 ## Verify final image and contents are correct.
