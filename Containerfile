@@ -6,7 +6,7 @@ COPY build_files /
 FROM quay.io/centos-bootc/centos-bootc:stream10
 
 COPY system_files /
-COPY cosign.pub /files/etc/pki/containers/horizonlinux.pub
+COPY cosign.pub /etc/pki/containers/horizonlinux.pub
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
