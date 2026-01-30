@@ -1,6 +1,8 @@
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
+
 COPY build_files /
+COPY --from=ghcr.io/ublue-os/brew:latest /system_files /files
 
 # Base Image
 FROM quay.io/centos-bootc/centos-bootc:stream10
