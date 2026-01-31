@@ -7,7 +7,7 @@ test:
     #!/usr/bin/env bash
     echo "Hello World!"
 
-update:
+update-fastfetch-config:
     #!/usr/bin/env bash
-    pkexec flatpak update
-    pkexec bootc update
+    cp /etc/skel/.config/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc
+    fastfetch
