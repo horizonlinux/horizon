@@ -16,10 +16,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
+    dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael10' terra-release && \
     dnf -y copr enable horizonproject/horizon && \
     dnf update -y && \
     dnf swap -y centos-stream-release horizon-release && \
-    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts && \
+    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts nerdfontssymbolsonly-nerd-fonts && \
     dnf group install -y KDE -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -x kde-settings-sddm -x kde-settings-pulseaudio -x kde-settings -x kde-settings-plasma && \
     dnf install -y \
         containerd \
@@ -40,6 +41,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         system-reinstall-bootc \
         tuned-ppd \ 
         xdg-desktop-portal-kde && \
+    dnf autoremove -y terra-release && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
     sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
