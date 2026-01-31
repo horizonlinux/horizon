@@ -22,7 +22,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf update -y && \
     dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts nerdfontssymbolsonly-nerd-fonts zsh && \
     dnf swap -y centos-stream-release horizon-release && \
-    dnf install -y --setopt=install_weak_deps=False kcm_ublue uupd krunner-bazaar && \
+    dnf install -y --setopt=install_weak_deps=False uupd krunner-bazaar && \
     dnf -y copr disable ublue-os/packages && \
     dnf update -y && \
     dnf group install -y KDE -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -x kde-settings-sddm -x kde-settings-pulseaudio -x kde-settings -x kde-settings-plasma && \
