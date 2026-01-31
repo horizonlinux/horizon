@@ -18,9 +18,12 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf update -y && \
     dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael10' terra-release && \
     dnf -y copr enable horizonproject/horizon && \
+    dnf -y copr enable ublue-os/packages && \
+    dnf install -y --setopt=install_weak_deps=False kcm_ublue uupd krunner-bazaar && \
+    dnf -y copr disable ublue-os/packages && \
     dnf update -y && \
     dnf swap -y centos-stream-release horizon-release && \
-    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts nerdfontssymbolsonly-nerd-fonts && \
+    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts nerdfontssymbolsonly-nerd-fonts zsh && \
     dnf group install -y KDE -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -x kde-settings-sddm -x kde-settings-pulseaudio -x kde-settings -x kde-settings-plasma && \
     dnf install -y \
         containerd \
@@ -42,6 +45,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         tuned-ppd \ 
         xdg-desktop-portal-kde && \
     dnf autoremove -y terra-release && \
+    sed -i '/SHELL=/bin/bash/c\SHELL=/usr/bin/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
     sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
