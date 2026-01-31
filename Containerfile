@@ -19,7 +19,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael10' terra-release && \
     dnf -y copr enable horizonproject/horizon && \
     dnf -y copr enable ublue-os/packages && \
-    dnf install -y --setopt=install_weak_deps=False -x *aurora* -x *bluefin* -x *bazite* uupd krunner-bazaar && \
+    dnf install -y --setopt=install_weak_deps=False -x *aurora* -x *bluefin* -x *bazite* kcm_ublue uupd krunner-bazaar && \
     dnf -y copr disable ublue-os/packages && \
     dnf update -y && \
     dnf swap -y centos-stream-release horizon-release && \
