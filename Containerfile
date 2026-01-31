@@ -16,7 +16,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
-    dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael10' terra-release && \
+    dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael10' terra-release && \
     dnf -y copr enable horizonproject/horizon && \
     dnf update -y && \
     dnf swap -y centos-stream-release horizon-release && \
