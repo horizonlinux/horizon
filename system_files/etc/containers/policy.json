@@ -23,7 +23,7 @@
             "ghcr.io/horizonlinux": [
                 {
                     "type": "sigstoreSigned",
-                    "keyPath": "/etc/pki/containers/horizonlinux.pub",
+                    "keyPath": "/etc/pki/containers/horizonlinux.pub"
                     "signedIdentity": {
                         "type": "matchRepository"
                     }
