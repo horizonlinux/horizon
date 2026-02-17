@@ -62,7 +62,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/ && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
     rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
-    plymouth-set-default-theme breeze -R && \
+    plymouth-set-default-theme breeze && \
     /ctx/initramfs.sh
     
 ### LINTING
