@@ -1,3 +1,0 @@
-docker:
-  ghcr.io/horizon-linux:
-    use-sigstore-attachments: true
