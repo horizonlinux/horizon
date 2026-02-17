@@ -59,7 +59,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
     rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
     glib-compile-schemas /usr/share/glib-2.0/schemas/ && \
-    dracut --no-hostonly --kver $(rpm -qa | grep -P 'kernel-(\d+\.\d+\.\d+)' | sed -E 's/kernel-//' | tail -n 1) --reproducible --zstd -v --add ostree -f "/lib/modules/$(rpm -qa | grep -P 'kernel-(\d+\.\d+\.\d+)' | sed -E 's/kernel-//' | tail -n 1)/initramfs.img"
+    dracut --no-hostonly --kver '$(rpm -q --queryformat="%{evr}.%{arch}' kernel-core)" --reproducible -v --add "ostree" -f '/lib/modules/$(rpm -q --queryformat="%{evr}.%{arch}" kernel-core)/initramfs.img' && \
+    chmod 0600 '/lib/modules/$(rpm -q --queryformat="%{evr}.%{arch}" kernel-core)/initramfs.img'
     
 ### LINTING
 ## Verify final image and contents are correct.
