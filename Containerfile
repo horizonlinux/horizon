@@ -26,6 +26,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf update -y && \
     dnf group install -y KDE -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -x kde-settings-sddm -x kde-settings-pulseaudio -x kde-settings -x kde-settings-plasma && \
     dnf install -y \
+        plymouth-theme-breeze \
         containerd \
         dolphin \
         distrobox \
@@ -58,7 +59,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/ && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
     rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
-    glib-compile-schemas /usr/share/glib-2.0/schemas/ && \
+    plymouth-set-default-theme breeze && \
     /ctx/initramfs.sh
     
 ### LINTING
