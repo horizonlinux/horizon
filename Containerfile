@@ -15,11 +15,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
-    dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael10' terra-release && \
     dnf -y copr enable horizonproject/horizon && \
     dnf -y copr enable ublue-os/packages && \
     dnf update -y && \
-    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts nerdfontssymbolsonly-nerd-fonts zsh && \
+    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts zsh && \
+    dnf install -y https://repos.fyralabs.com/terrael10/nerdfontssymbolsonly-nerd-fonts-0%3A3.4.0-1.el10.noarch.rpm && \
     dnf swap -y centos-stream-release horizon-release && \
     dnf install -y --setopt=install_weak_deps=False uupd krunner-bazaar && \
     dnf -y copr disable ublue-os/packages && \
@@ -44,7 +44,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         system-reinstall-bootc \
         tuned-ppd \ 
         xdg-desktop-portal-kde && \
-    dnf autoremove -y terra-release && \
     sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
