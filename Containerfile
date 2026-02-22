@@ -13,7 +13,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-	systemd-tmpfiles --create && \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
     dnf -y copr enable horizonproject/horizon && \
@@ -52,7 +51,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
-    sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
+    # sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
     mkdir -p /etc/flatpak/remotes.d/ && \
