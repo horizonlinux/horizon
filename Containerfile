@@ -63,6 +63,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
     rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
     glib-compile-schemas /usr/share/glib-2.0/schemas/ && \
+	echo "d $(find /var/lib/dnf/repos/appstream-*) 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
+	echo "d $(find /var/lib/dnf/repos/baseos-*) 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
+	echo "d $(find /var/lib/dnf/repos/crb-*) 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
+	echo "d $(find /var/lib/dnf/repos/epel-*) 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
+	echo "d $(find /var/lib/dnf/repos/extras-common-*) 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
     /ctx/initramfs.sh
     
 ### LINTING
