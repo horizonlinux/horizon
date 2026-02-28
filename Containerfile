@@ -73,6 +73,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 	echo "d /var/lib/samba/drivers 0775 root printadmin - -" | tee -a /usr/lib/tmpfiles.d/samba.conf && \
 	echo "d /var/lib/samba/usershares 1770 root usershares - -" | tee -a /usr/lib/tmpfiles.d/samba.conf && \
 	echo "d /var/lib/tuned 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
+	echo "d /var/log/tuned 0755 tuned tuned -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
     /ctx/initramfs.sh
     
 ### LINTING
