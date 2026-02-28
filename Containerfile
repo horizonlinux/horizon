@@ -5,8 +5,10 @@ COPY build_files /
 
 # Base Image
 FROM quay.io/centos-bootc/centos-bootc:stream10
+FROM ghcr.io/ublue-os/brew:latest as brew
 
 COPY system_files /
+COPY --from=brew /system_files /
 COPY cosign.pub /etc/pki/containers/horizonlinux.pub
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -51,6 +53,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
+	systemctl enable uupd.timer && \
     # sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
