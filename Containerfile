@@ -8,7 +8,7 @@ FROM quay.io/centos-bootc/centos-bootc:stream10
 FROM ghcr.io/ublue-os/brew:latest as brew
 
 COPY system_files /
-COPY --from=brew /system_files /
+
 COPY cosign.pub /etc/pki/containers/horizonlinux.pub
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
