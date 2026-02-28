@@ -3,8 +3,10 @@ FROM scratch AS ctx
 COPY build_files /
 
 FROM quay.io/centos-bootc/centos-bootc:stream10
+FROM ghcr.io/ublue-os/brew AS brew
 
 COPY system_files /
+COPY --from=brew /system_files /
 COPY cosign.pub /etc/pki/containers/horizonlinux.pub
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -44,7 +46,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         qemu-guest-agent \
         spice-vdagent \
         system-reinstall-bootc \
-        tuned-ppd \ 
+        tuned-ppd \
         xdg-desktop-portal-kde && \
     sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
