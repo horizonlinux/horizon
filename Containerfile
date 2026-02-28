@@ -62,6 +62,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/ && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
     rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
+	sed -i '/Defaults env_reset/c\Defaults env_reset,pwfeedback' /etc/sudoers && \
     glib-compile-schemas /usr/share/glib-2.0/schemas/ && \
 	echo "d $(find /var/lib/dnf/repos -maxdepth 1 -name 'appstream-*') 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
 	echo "d $(find /var/lib/dnf/repos -maxdepth 1 -name 'baseos-*') 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
@@ -76,7 +77,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 	echo "d /var/log/tuned 0755 root root -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
 	echo "f /var/log/tuned/tuned-ppd.log 0644 root root -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
 	ln -s /usr/share/horizon/fastfetch/config.jsonc /etc/skel/.config/fastfetch/config.jsonc && \
-	sed -i '/Defaults env_reset/c\Defaults env_reset,pwfeedback' /etc/sudoers && \
     /ctx/initramfs.sh
     
 ### LINTING
