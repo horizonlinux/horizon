@@ -70,6 +70,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 	echo "d $(find /var/lib/dnf/repos -maxdepth 1 -name 'extras-common-*') 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
 	echo "d /var/lib/flatpak 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/flatpak.conf && \
 	echo "d /var/lib/openvpn 0770 openvpn openvpn - -" | tee -a /usr/lib/tmpfiles.d/openvpn.conf && \
+	echo "d /var/lib/samba/drivers 0775 root printadmin - -" | tee -a /usr/lib/tmpfiles.d/samba.conf && \
+	echo "d /var/lib/samba/usershares 1770 root usershares - -" | tee -a /usr/lib/tmpfiles.d/samba.conf && \
+	echo "d /var/lib/tuned 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
     /ctx/initramfs.sh
     
 ### LINTING
