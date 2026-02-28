@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=System Update
+Name[pl]=Aktualizacja Systemu
+
+Comment=Check for and download system updates
+Comment[pl]=Sprawdzaj dostępność aktualizacji i pobieraj je
+
+Icon=system-software-update
+Terminal=true
+Exec=/bin/bash -c "pkexec uupd; echo; echo 'You may want to reboot your device'; echo; echo 'Press Enter to close…'; read -r; exit"
+Type=Application
+Categories=System;Utility;
