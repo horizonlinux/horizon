@@ -76,7 +76,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 	echo "d /var/lib/tuned 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
 	echo "d /var/log/tuned 0755 root root -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
 	echo "f /var/log/tuned/tuned-ppd.log 0644 root root -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
-	ln -s /usr/share/horizon/fastfetch/config.jsonc /etc/skel/.config/fastfetch/config.jsonc && \
+	echo "d /var/spool/cups 0710 root lp - -" | tee -a /usr/lib/tmpfiles.d/cups.conf && \
     /ctx/initramfs.sh
     
 ### LINTING
