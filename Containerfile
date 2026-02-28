@@ -1,14 +1,10 @@
-# Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 
 COPY build_files /
 
-# Base Image
 FROM quay.io/centos-bootc/centos-bootc:stream10
-FROM ghcr.io/ublue-os/brew:latest as brew
 
 COPY system_files /
-
 COPY cosign.pub /etc/pki/containers/horizonlinux.pub
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
@@ -54,7 +50,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
 	systemctl enable uupd.timer && \
-    # sed -i 's|applications:org.kde.discover.desktop,|applications:io.github.kolunmi.Bazaar.desktop,|' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
     chmod a+x /usr/bin/just-do && \
     mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md' && \
     mkdir -p /etc/flatpak/remotes.d/ && \
@@ -81,7 +76,5 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 	echo "f /var/log/tuned/tuned-ppd.log 0644 root root -" | tee -a /usr/lib/tmpfiles.d/tuned.conf && \
 	echo "d /var/spool/cups 0710 root lp - -" | tee -a /usr/lib/tmpfiles.d/cups.conf && \
     /ctx/initramfs.sh
-    
-### LINTING
-## Verify final image and contents are correct.
+
 RUN bootc container lint
