@@ -9,5 +9,6 @@ test:
 
 update-fastfetch-config:
     #!/usr/bin/env bash
-    cp /etc/skel/.config/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc
+    mkdir -p /var/home/$(whoami)/.config/fastfetch
+    cp /etc/skel/.config/fastfetch/config.jsonc /var/home/$(whoami)/.config/fastfetch/config.jsonc
     fastfetch
