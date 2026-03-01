@@ -1,18 +1,20 @@
 FROM scratch AS ctx
 
 COPY build_files /
-
-FROM quay.io/centos-bootc/centos-bootc:stream10
 FROM ghcr.io/ublue-os/brew AS brew
 
+COPY --from=brew /system_files /files
+
+FROM quay.io/centos-bootc/centos-bootc:stream10
+
 COPY system_files /
-COPY --from=brew /system_files /
 COPY cosign.pub /etc/pki/containers/horizonlinux.pub
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
+	rsync -rvKl /ctx/files/ / && \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
     dnf -y copr enable horizonproject/horizon && \
