@@ -58,11 +58,11 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo && \
     systemctl enable flatpak-add-flathub-repos.service && \
     rpm --erase --nodeps plasma-lookandfeel-fedora && \
+	dnf -y copr disable ublue-os/packages && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedora.desktop/ && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/ && \
     rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/ && \
     rm -rf /usr/share/glib-2.0/schemas/gschemas.compiled && \
-	sed -i '/Defaults env_reset/c\Defaults env_reset,pwfeedback' /etc/sudoers && \
     glib-compile-schemas /usr/share/glib-2.0/schemas/ && \
 	echo "d $(find /var/lib/dnf/repos -maxdepth 1 -name 'appstream-*') 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
 	echo "d $(find /var/lib/dnf/repos -maxdepth 1 -name 'baseos-*') 0755 root root - -" | tee -a /usr/lib/tmpfiles.d/dnf.conf && \
