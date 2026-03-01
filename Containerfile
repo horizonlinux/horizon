@@ -3,12 +3,11 @@ FROM scratch AS ctx
 COPY build_files /
 FROM ghcr.io/ublue-os/brew AS brew
 
-COPY --from=brew /system_files /files
-
 FROM quay.io/centos-bootc/centos-bootc:stream10
 
 COPY system_files /
 COPY cosign.pub /etc/pki/containers/horizonlinux.pub
+COPY --from=brew /system_files /
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
@@ -49,9 +48,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         system-reinstall-bootc \
         tuned-ppd \
         xdg-desktop-portal-kde && \
-	dnf install -y rsync && \
-	rsync -rvKl /ctx/files/ / && \
-	dnf remove -y rsync && \
     sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
