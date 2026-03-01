@@ -14,7 +14,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-	rsync -rvKl /ctx/files/ / && \
     dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm && \
     dnf update -y && \
     dnf -y copr enable horizonproject/horizon && \
@@ -50,6 +49,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         system-reinstall-bootc \
         tuned-ppd \
         xdg-desktop-portal-kde && \
+	dnf install -y rsync && \
+	rsync -rvKl /ctx/files/ / && \
+	dnf remove -y rsync && \
     sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
