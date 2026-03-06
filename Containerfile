@@ -24,6 +24,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf install -y --setopt=install_weak_deps=False uupd krunner-bazaar ublue-brew && \
     dnf -y copr disable ublue-os/packages && \
     dnf update -y && \
+	dnf install -y dejavu-fonts dejavu-sans-mono-fonts google-noto-sans-fonts google-noto-fonts-common && \
     dnf group install -y KDE -x kdebugsettings -x krfb -x plasma-discover -x plasma-discover-notifier -x kde-settings-sddm -x kde-settings-pulseaudio -x kde-settings -x kde-settings-plasma && \
     dnf install -y \
         plymouth \
