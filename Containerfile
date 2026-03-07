@@ -18,7 +18,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     dnf -y copr enable horizonproject/horizon && \
     dnf -y copr enable ublue-os/packages && \
     dnf update -y && \
-    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts zsh && \
+    dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts && \
     dnf install -y https://repos.fyralabs.com/terrael10/nerdfontssymbolsonly-nerd-fonts-0%3A3.4.0-1.el10.noarch.rpm && \
     dnf swap -y centos-stream-release horizon-release && \
     dnf install -y --setopt=install_weak_deps=False uupd krunner-bazaar ublue-brew && \
@@ -49,7 +49,6 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
         system-reinstall-bootc \
         tuned-ppd \
         xdg-desktop-portal-kde && \
-    sed -i '/SHELL=\/bin\/bash/c\SHELL=\/usr\/bin\/zsh' /etc/default/useradd && \
     systemctl enable sddm && \
     systemctl enable plasma-setup && \
 	systemctl enable uupd.timer && \
