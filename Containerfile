@@ -16,7 +16,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/01-setupdnf.sh && \
     /ctx/02-basesystem.sh && \
     /ctx/03-KDE.sh && \
-    /ctxs/04-includebatteries.sh && \
+    /ctx/04-includebatteries.sh && \
     /ctx/05-systemconf.sh && \
     /ctx/06-fixdirs.sh && \
     /ctx/07-initramfs.sh
