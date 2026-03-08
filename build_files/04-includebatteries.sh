@@ -18,7 +18,7 @@ dnf install -y \
         google-noto-sans-sundanese-fonts \
         grub2-tools-extra \
         heif-pixbuf-loader \
-        libavcodec-freeworld \
+        libavcodec-free \
         libcamera-gstreamer \
         libcamera-tools \
         libimobiledevice-utils \
