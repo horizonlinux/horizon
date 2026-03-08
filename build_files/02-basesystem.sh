@@ -14,25 +14,22 @@ dnf update -y
 dnf install -y langpacks-*
 dnf install -y dejavu-*-fonts google-noto-sans-fonts google-noto-fonts-common
 dnf install -y \
-        alse-firmware \
+        alsa-firmware \
         apr \
         apr-util \
         ffmpeg \
         ffmpeg-libs \
         ffmpegthumbnailer \
         flatpak-spawn \
-        fuse3 \
         google-noto-sans-balinese-fonts \
         google-noto-sans-cjk-fonts \
         google-noto-sans-javanese-fonts \
         google-noto-sans-sundanese-fonts \
         grub2-tools-extra \
         heif-pixbuf-loader \
-        intel-vaapi-driver \
-        libavcodec \
+        libavcodec-freeworld \
         libcamera-gstreamer \
         libcamera-tools \
-        libfdk-aac \
         libimobiledevice-utils \
         lshw \
         pam-u2f \
