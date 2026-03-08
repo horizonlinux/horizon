@@ -8,6 +8,8 @@ dnf config-manager --set-enabled crb && dnf install -y https://dl.fedoraproject.
 dnf update -y
 dnf -y copr enable horizonproject/horizon
 dnf -y copr enable ublue-os/packages
+dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-10.noarch.rpm
+dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 dnf update -y
 
 echo "::endgroup::"
