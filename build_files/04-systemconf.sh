@@ -4,7 +4,7 @@ set -eoux pipefail
 
 echo "::group:: Configure Syetem"
 
-systemctl enable sddm
+systemctl enable plasmalogin
 systemctl enable plasma-setup
 systemctl enable uupd.timer
 systemctl enable firewalld
