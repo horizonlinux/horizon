@@ -4,7 +4,7 @@ set -eoux pipefail
 
 echo "::group:: Base System Packages"
 
-dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-10.noarch.rpm
+dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-10.noarch.rpm
 dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts
 dnf install -y https://repos.fyralabs.com/terrael10/nerdfontssymbolsonly-nerd-fonts-0%3A3.4.0-1.el10.noarch.rpm
 dnf swap -y centos-stream-release horizon-release
@@ -64,5 +64,6 @@ dnf install -y \
         spice-vdagent \
         system-reinstall-bootc \
         tuned-ppd
+dnf swap -y fdk-aac-free fdk-aac
 
 echo "::endgroup::"
