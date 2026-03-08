@@ -9,7 +9,7 @@ dnf update -y
 dnf -y copr enable horizonproject/horizon
 dnf -y copr enable ublue-os/packages
 dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-10.noarch.rpm
-dnf install -y --nogpgcheck https://repos.fyralabs.com/terrael10/terra-release-0%3A10-7.noarch.rpm
+dnf install -y --nogpgcheck https://repos.fyralabs.com/terrael10/terra-gpg-keys-0%3A10-2.noarch.rpm https://repos.fyralabs.com/terrael10/terra-release-0%3A10-7.noarch.rpm
 dnf update -y
 
 echo "::endgroup::"
