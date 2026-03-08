@@ -16,8 +16,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/01-setupdnf.sh && \
     /ctx/02-basesystem.sh && \
     /ctx/03-KDE.sh && \
-    /ctx/04-systemconf.sh && \
-    /ctx/05-fixdirs.sh && \
-    /ctx/06-initramfs.sh
+    /ctxs/04-includebatteries.sh && \
+    /ctx/05-systemconf.sh && \
+    /ctx/06-fixdirs.sh && \
+    /ctx/07-initramfs.sh
 
 RUN bootc container lint
