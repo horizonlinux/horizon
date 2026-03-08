@@ -5,6 +5,8 @@ echo "::group:: ===$(basename "$0")==="
 
 set -oue pipefail
 
+echo "add_dracutmodules+=\" resume \"" >/etc/dracut.conf.d/resume.conf
+
 KERNEL_VERSION=$(rpm -q --queryformat="%{evr}.%{arch}" kernel-core)
 
 # Ensure Initramfs is generated

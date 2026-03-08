@@ -31,7 +31,7 @@
         {
             "type": "packages",
             "key": "├󰏖",
-            "keyColor": "yellow"
+            "keyColor": "yellow",
             "disabled": ["rpm"]
         },
         {
