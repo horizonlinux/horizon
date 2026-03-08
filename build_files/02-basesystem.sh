@@ -4,7 +4,8 @@ set -eoux pipefail
 
 echo "::group:: Base System Packages"
 
-dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts nerdfontssymbolsonly-nerd-fonts
+dnf install -y horizon-logos horizon-backgrounds horizon-themes google-noto-color-emoji-fonts
+dnf install -y https://repos.fyralabs.com/terrael10/nerdfontssymbolsonly-nerd-fonts-0%3A3.4.0-1.el10.noarch.rpm
 dnf swap -y centos-stream-release horizon-release
 dnf install -y --setopt=install_weak_deps=False uupd krunner-bazaar ublue-brew
 dnf -y copr disable ublue-os/packages
@@ -59,6 +60,5 @@ dnf install -y \
         spice-vdagent \
         system-reinstall-bootc \
         tuned-ppd
-dnf swap -y fdk-aac-free fdk-aac
 
 echo "::endgroup::"
