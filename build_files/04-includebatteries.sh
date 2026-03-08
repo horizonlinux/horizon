@@ -3,17 +3,14 @@
 set -eoux pipefail
 
 echo "::group:: Include Batteries"
-dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-10.noarch.rpm
-
-dnf remove -y libswscale-free libswresample-free
 
 dnf install -y \
         alsa-firmware \
         apr \
         apr-util \
-        ffmpeg \
-        ffmpeg-libs \
+        ffmpeg-free \
         ffmpegthumbnailer \
+        ffmpegthumbnailer-libs \
         flatpak-spawn \
         google-noto-sans-balinese-fonts \
         google-noto-sans-cjk-fonts \
