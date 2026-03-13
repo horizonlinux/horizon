@@ -123,7 +123,7 @@ jobs:
           path: |
             /tmp/outputs/digests/*.txt
 
-manifest:
+  manifest:
     name: Create Manifest
     runs-on: ubuntu-latest
     if: always()
