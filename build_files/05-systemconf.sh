@@ -15,6 +15,7 @@ sed -i 's/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=suspend-
 sed -i 's/#SleepOperation=.*/SleepOperation=suspend-then-hibernate/g' /usr/lib/systemd/logind.conf
 sed -i '/performance/c\balanced' /etc/tuned/ppd_base_profile
 sed -i '/throughput-performance/c\balanced' /etc/tuned/active_profile
+sed -i 's|uupd|& --disable-module-brew --disable-module-distrobox --disable-module-flatpak|' /usr/lib/systemd/system/uupd.service
 mkdir -p /etc/flatpak/remotes.d/
 curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo
 systemctl enable flatpak-add-flathub-repos.service
