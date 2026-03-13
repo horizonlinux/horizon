@@ -7,6 +7,6 @@ Comment[pl]=Sprawdzaj dostępność aktualizacji i pobieraj je
 
 Icon=system-software-update
 Terminal=true
-Exec=/bin/bash -c "pkexec uupd; echo; echo 'You may want to reboot your device'; echo; echo 'Press Enter to close…'; read -r; exit"
+Exec=/bin/bash -c "pkexec uupd --disable-module-brew --disable-module-distrobox --disable-module-flatpak; echo; echo 'You may want to reboot your device'; echo; echo 'Press Enter to close…'; read -r; exit"
 Type=Application
 Categories=System;Utility;
