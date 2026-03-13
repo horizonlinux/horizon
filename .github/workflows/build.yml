@@ -123,7 +123,7 @@ jobs:
           path: |
             /tmp/outputs/digests/*.txt
 
-  manifest:
+manifest:
     name: Create Manifest
     runs-on: ubuntu-latest
     if: always()
@@ -139,10 +139,6 @@ jobs:
     steps:
       - name: Install dependencies
         run: apk add bash coreutils curl docker findutils fuse-overlayfs git grep jq podman sed
-
-      - name: Install Cosign
-        uses: sigstore/cosign-installer@v4.1.0
-        if: github.event_name != 'pull_request'
 
       - name: Exit on failure
         shell: bash
@@ -165,7 +161,7 @@ jobs:
         run: echo "date=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" | tee "${GITHUB_OUTPUT}"
 
       - name: Image Metadata
-        uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         id: metadata
         with:
           tags: |
@@ -178,7 +174,7 @@ jobs:
             containers.bootc=1
             io.artifacthub.package.deprecated=false
             io.artifacthub.package.keywords=${{ env.IMAGE_KEYWORDS }}
-            io.artifacthub.package.license=Apache-2.0
+            io.artifacthub.package.license=AGPL-2.0
             io.artifacthub.package.logo-url=${{ env.IMAGE_LOGO_URL }}
             io.artifacthub.package.prerelease=false
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/${{ github.sha }}/README.md
@@ -192,15 +188,15 @@ jobs:
             org.opencontainers.image.version=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
 
       - name: Fetch Build Outputs
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v6
+        if: inputs.publish
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v6
         with:
           pattern: ${{ env.IMAGE_NAME }}-*
           merge-multiple: true
           path: /tmp/artifacts
 
       - name: Load Outputs
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: inputs.publish
         shell: bash
         id: load-outputs
         run: |
@@ -216,16 +212,20 @@ jobs:
           echo "OUTPUT_CSV=$(base32 -w 0 < "${OUTCSV}")" | tee -a "${GITHUB_OUTPUT}"
 
       - name: Login to GitHub Container Registry
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: inputs.publish
         env:
           REGISTRY: ghcr.io
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | podman login -u "${{ github.actor }}" --password-stdin "${REGISTRY}"
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login -u "${{ github.actor }}" --password-stdin "${REGISTRY}"
 
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v4.0.0
+        if: github.event_name != 'pull_request'
+
       - name: Publish manifest with unified architecture and sign
         shell: bash
-        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: inputs.publish
         env:
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
