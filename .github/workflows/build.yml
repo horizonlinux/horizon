@@ -188,7 +188,6 @@ jobs:
             org.opencontainers.image.version=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
 
       - name: Fetch Build Outputs
-        if: inputs.publish
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v6
         with:
           pattern: ${{ env.IMAGE_NAME }}-*
@@ -196,7 +195,6 @@ jobs:
           path: /tmp/artifacts
 
       - name: Load Outputs
-        if: inputs.publish
         shell: bash
         id: load-outputs
         run: |
@@ -212,7 +210,6 @@ jobs:
           echo "OUTPUT_CSV=$(base32 -w 0 < "${OUTCSV}")" | tee -a "${GITHUB_OUTPUT}"
 
       - name: Login to GitHub Container Registry
-        if: inputs.publish
         env:
           REGISTRY: ghcr.io
         run: |
@@ -225,7 +222,6 @@ jobs:
 
       - name: Publish manifest with unified architecture and sign
         shell: bash
-        if: inputs.publish
         env:
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
