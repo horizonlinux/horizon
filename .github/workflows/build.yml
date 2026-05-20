@@ -33,7 +33,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: ["amd64", "arm64"]
-    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-24.04' || 'ubuntu-24.04-arm' }}
+    runs-on: ${{ matrix.platform == 'amd64' && 'ubuntu-26.04' || 'ubuntu-26.04-arm' }}
     steps:
       - name: Maximize build space
         uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
@@ -43,27 +43,12 @@ jobs:
         with:
           submodules: true
 
-      - name: Enable cache for brew
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
-        id: brew-cache
-        with:
-          path: /home/linuxbrew
-          key: brew-${{ matrix.platform }}
-
       - name: Build image
         id: build
         run: sudo podman build  -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
 
       - name: Rechunk Image
         run: sudo podman run --rm --privileged -v /var/lib/containers:/var/lib/containers --entrypoint /usr/libexec/bootc-base-imagectl "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" rechunk --max-layers 67 "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
-
-      # TODO: remove me when we have a new podman in 26.04 runners
-      # needed because old podman doesn't push layer annotations for
-      # the rpm-ostree rechunker at all
-      - name: Install Podman from Brew
-        if: steps.brew-cache.outputs.cache-hit != 'true'
-        run: |
-          /home/linuxbrew/.linuxbrew/bin/brew install podman
 
       - name: Login to GitHub Container Registry
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
