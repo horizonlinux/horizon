@@ -1,9 +1,9 @@
 [Unit]
 Description=Display EOL message
-ConditionPathExists=!/var/lib/horizon/eol-shown
+ConditionPathExists=!%h/.local/share/horizon/eol-shown
 
 [Service]
 Type=oneshot
-ExecStart=mkdir -p /var/lib/horizon
+ExecStart=mkdir -p %h/.local/share/horizon
 ExecStart=/usr/share/horizon/eol
-ExecStart=touch /var/lib/horizon/eol-shown
+ExecStart=touch %h/.local/share/horizon/eol-shown
