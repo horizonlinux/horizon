@@ -1,0 +1,3 @@
+#!/bin/bash
+
+kdialog --msgbox "Thank you for using Horizon. We're sorry to announce, but Horizon will be no longer receiving updates.\nWe recommend switching to one of the following distros:\n\n  - Recommended distros with KDE Plasma:\n    - Aurora - https://getaurora.dev (No ARM support, No LTS Kernel)\n    - HelliumOS - https://heliumos.org (No ARM Support)\n\n  - Recommended distros with GNOME:\n    - Bluefin LTS - https://projectbluefin.io\n    - Bluefin - https://projectbluefin.io (No ARM support, No LTS Kernel)\n\nLearn how to switch and more at https://github.com/horizonlinux/horizon/EOL.md" --title "Horizon EOL"

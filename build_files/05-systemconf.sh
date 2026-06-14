@@ -4,9 +4,10 @@ set -eoux pipefail
 
 echo "::group:: Configure Syetem"
 
+ln -s /usr/lib/systemd/user/eol.service /usr/lib/systemd/user/default.target.wants/eol.service
+
 systemctl enable plasmalogin
 systemctl enable plasma-setup
-systemctl enable uupd.timer
 systemctl enable firewalld
 mv '/usr/share/doc/just/README.中文.md' '/usr/share/doc/just/README.zh-cn.md'
 sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=suspend-then-hibernate/g' /usr/lib/systemd/logind.conf
