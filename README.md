@@ -3,7 +3,7 @@
 <img width="1920" height="1080" alt="image" src="https://raw.githubusercontent.com/horizonlinux/horizon-themes/refs/heads/main/io.github.horizonlinux.HorizonLight/contents/previews/fullscreenpreview.jpg" />
 
 # Horizon is End-of-life
-Thank you for using Horizon. Please read [EOL.md](https://github.com/horizonlinux/horizon/EOL.md)
+Thank you for using Horizon. Please read [EOL.md](https://github.com/horizonlinux/horizon/blob/main/EOL.md)
 
 Horizon is an atomic, CentOS-based distribution, with focus on user-friendliness, ease-of-use, and stability.
 
