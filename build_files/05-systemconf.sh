@@ -20,7 +20,6 @@ mkdir -p /etc/flatpak/remotes.d/
 curl --retry 3 -Lo /etc/flatpak/remotes.d/flathub.flatpakrepo https://dl.flathub.org/repo/flathub.flatpakrepo
 systemctl enable flatpak-add-flathub-repos.service
 rpm --erase --nodeps plasma-lookandfeel-fedora
-dnf -y copr disable ublue-os/packages
 rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedora.desktop/
 rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoradark.desktop/
 rm -rf /usr/share/plasma/look-and-feel/org.fedoraproject.fedoralight.desktop/
