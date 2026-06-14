@@ -7,3 +7,6 @@ Type=oneshot
 ExecStart=mkdir -p %h/.local/share/horizon
 ExecStart=/usr/share/horizon/eol
 ExecStart=touch %h/.local/share/horizon/eol-shown
+
+[Install]
+WantedBy=default.target
